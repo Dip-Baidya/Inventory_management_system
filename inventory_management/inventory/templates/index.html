@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<br>
+
+<div class="button-group">
+    <a href="{% url 'Display-laptop' %}" class="btn btn-primary btn-md" role="button">Laptops</a>
+    <a href="{% url 'Add-laptop' %}" class="btn btn-warning btn-md" role="button">+</a>
+
+    <a href="{% url 'Display-desktop' %}" class="btn btn-primary btn-md" role="button">Desktops</a>
+    <a href="{% url 'Add-desktop' %}" class="btn btn-warning btn-md" role="button">+</a>
+
+    <a href="{% url 'Display-mobile' %}" class="btn btn-primary btn-md" role="button">Mobiles</a>
+    <a href="{% url 'Add-mobile' %}" class="btn btn-warning btn-md" role="button">+</a>
+</div>
+
+<br>
+
+
+<h4>Currently Viewing {{header}}</h4>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>Model</th>
+        <th>prices</th>
+        <th>Status</th>
+        <th>Issues</th>
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for item in items %}
+    <tr>
+        <td>{{item.pk}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.status}}</td>
+        <td>{{item.issues}}</td>
+        {% if header|lower == "laptops" %}
+        <td>
+            <a href="{% url 'Edit-laptop' item.pk %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'Delete-laptop' item.pk %}" class="btn btn-danger btn-sm">x</a>
+        </td>
+        {% elif header|lower == "desktops" %}
+        <td>
+            <a href="{% url 'Edit-desktop' item.pk %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'Delete-desktop' item.pk %}" class="btn btn-danger btn-sm">x</a>
+        </td>
+        {% else %}
+        <td>
+            <a href="{% url 'Edit-mobile' item.pk %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'Delete-mobile' item.pk %}" class="btn btn-danger btn-sm">x</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
